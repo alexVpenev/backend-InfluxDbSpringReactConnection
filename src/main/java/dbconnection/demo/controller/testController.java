@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/test")
@@ -15,5 +17,8 @@ public class testController {
         return "Hello World!";
     }
 
-
+    @PostMapping("/webhook")
+    public String getMyJson(@RequestBody Map<String, Object> json) {
+        return ("" + json);
+    }
 }
