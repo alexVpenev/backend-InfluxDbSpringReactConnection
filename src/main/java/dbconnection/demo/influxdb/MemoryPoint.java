@@ -1,8 +1,9 @@
 package dbconnection.demo.influxdb;
 
+import com.influxdb.annotations.Column;
+import com.influxdb.annotations.Measurement;
 import lombok.Data;
-import org.influxdb.annotation.Column;
-import org.influxdb.annotation.Measurement;
+
 
 import java.time.Instant;
 

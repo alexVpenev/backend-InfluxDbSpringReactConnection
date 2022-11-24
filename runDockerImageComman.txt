@@ -1,0 +1,1 @@
+docker run --interactive --tty --name dockerTesting --publish 8082:8082 spring-boot-docker
