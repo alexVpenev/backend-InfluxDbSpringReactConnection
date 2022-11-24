@@ -22,7 +22,7 @@ public class testController {
 
     @GetMapping("/")
     public String testHelloDocker() {
-        return "Jivota na plamen e glupost";
+        return "azis e jivota na plamen";
     }
 
     @GetMapping("/hello")

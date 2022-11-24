@@ -1,4 +1,9 @@
 
+sudo docker stop (container name/////????/ id)
+sudo docker start (docker name //// id)
+
+docker build --build-arg JAR_FILE=build/libs/\*.jar -t springio/gs-spring-boot-docker .
+docker run -p (2525/3636):8080 (name of docker container)
 
 docker run --interactive --tty --name dockerTesting --publish 8082:8082 spring-boot-docker
 
