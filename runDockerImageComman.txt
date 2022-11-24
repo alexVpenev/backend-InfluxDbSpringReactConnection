@@ -1,1 +1,17 @@
 docker run --interactive --tty --name dockerTesting --publish 8082:8082 spring-boot-docker
+
+
+
+
+----usefulCommands:--------
+sudo docker pull postgres:alpine
+sudo docker run --name testin -e POSTGRES_PASSWORD=asdasd -d -p 2222:2222 postgres:alpine
+sudo docker exec -it testin bash
+bash#./pwd/ls |
+psql // psql -U name(postgres)
+psql#./ \de || \d || create database (name/test) || \c (name/test) ...... \d(ls) 
+-----
+curl --request GET "http://localhost:2525/hello"
+
+-----
+sudo docker 
