@@ -1,7 +1,10 @@
+
+
 docker run --interactive --tty --name dockerTesting --publish 8082:8082 spring-boot-docker
 
 testin new branch merge
 
+after great fail 
 
 current branch test docker on aws
 
