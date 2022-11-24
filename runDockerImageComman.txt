@@ -3,6 +3,8 @@ docker run --interactive --tty --name dockerTesting --publish 8082:8082 spring-b
 testin new branch merge
 
 
+current branch test docker on aws
+
 ----usefulCommands:--------
 sudo docker pull postgres:alpine
 sudo docker run --name testin -e POSTGRES_PASSWORD=asdasd -d -p 2222:2222 postgres:alpine
