@@ -3,7 +3,7 @@ package dbconnection.demo.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Truck {
+public class Truck{
 
     @Getter @Setter
     public int id;
@@ -27,5 +27,9 @@ public class Truck {
         this.status = status;
         this.owner = owner;
     }
+
+//    public String getMaikaTi() {
+//        return "maika ti";
+//    }
 
 }

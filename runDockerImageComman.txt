@@ -24,4 +24,21 @@ psql#./ \de || \d || create database (name/test) || \c (name/test) ...... \d(ls)
 curl --request GET "http://localhost:2525/hello"
 
 -----
-sudo docker 
+*create docker container(from image)
+sudo docker run --name (name) -e POSTGRES_PASSWORD=asdasd -d -p openPort:appPort postgres:alpine
+
+*enter container
+sudo docker exec -it postgres bash
+
+*enter user
+psql -U postgres(<- user)
+
+	*in psql
+		\du (show all users and rols/permissions)
+		\d -name- (show contents of a table)
+		\l (kinda like ls but for dbs)
+		\d (find relations)
+		\c (name of db) (connect to db for some unholy reason)
+		\q (get out of database)
+		
+psql -h localhost(ip address) -p 5432 -U postgres(user)
