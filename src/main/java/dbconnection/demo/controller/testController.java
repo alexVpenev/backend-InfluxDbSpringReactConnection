@@ -42,8 +42,10 @@ public class testController {
             return connection;
         }
         catch (SQLException e) {
-            throw new IllegalStateException("JDBC driver failed to connect to the database " + "jdbc:postgresql://52.58.123.96:3636" + ".", e);
+//            throw new IllegalStateException("JDBC driver failed to connect to the database " + "jdbc:postgresql://52.58.123.96:3636" + ".", e);
+            throw new IllegalStateException(e);
         }
+
     }
 
 
@@ -65,12 +67,23 @@ public class testController {
 
     @GetMapping("/sql")
     public ResponseEntity<String> testSql() {
+        try {
+            return ResponseEntity.ok().body(curlSqlRequest());
+        }catch (Exception e) {
+            return ResponseEntity.ok().body(e.toString());
+        }
+
+    }
+
+    private String curlSqlRequest() {
 
         Connection connection = this.getDatabaseConnection();
         String sql = "SELECT * from trucks;";
         String serial_number = "1";
 
         try {
+
+
 
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -87,7 +100,7 @@ public class testController {
 
         catch (Exception e) {
 
-            System.out.println(e);
+            serial_number=e.toString();
         }
 
         finally {
@@ -99,10 +112,7 @@ public class testController {
                 System.out.println("Can't close connection");
             }
         }
-
-
-
-        return ResponseEntity.ok().body(serial_number);
+        return serial_number;
     }
 
 //    @GetMapping("/maikaTi")
