@@ -3,6 +3,7 @@ import subprocess
 
 
 
+os.system('git pull')
 
 os.system('gradle build')
 
