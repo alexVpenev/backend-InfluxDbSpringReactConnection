@@ -4,7 +4,7 @@ import subprocess
 
 
 
-# os.system('cd ')
+os.system('gradle build')
 
 os.system('sudo docker build --build-arg JAR_FILE=build/libs/\*.jar -t hypercare .')
 
