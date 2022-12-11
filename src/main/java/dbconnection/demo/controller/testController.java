@@ -51,7 +51,7 @@ public class testController {
 
     @GetMapping("/")
     public String testHelloDocker() {
-        return "ne moga da povqrvam kolko sum strahoten";
+        return "FINALEN TEST";
     }
 
     @GetMapping("/hello")
