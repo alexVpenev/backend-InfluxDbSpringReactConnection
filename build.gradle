@@ -25,7 +25,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.projectlombok:lombok:1.18.22'
 	implementation "org.influxdb:influxdb-java:2.5"
-	implementation 'com.influxdb:influxdb-client-java:1.4.0'
+	implementation 'com.influxdb:influxdb-client-java:3.3.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter:2.5.6'
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.6'

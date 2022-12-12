@@ -2,6 +2,7 @@ package dbconnection.demo.controller;
 
 import dbconnection.demo.entity.ITruck;
 import dbconnection.demo.entity.Truck;
+import dbconnection.demo.influxdb.InfluxDBConnectionClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import com.influxdb.client.InfluxDBClient;
 
 import java.sql.*;
 import java.util.Map;
@@ -24,6 +25,39 @@ public class testController {
     private Environment env ;
 
     public testController() {
+
+    }
+
+
+    @GetMapping("/influx")
+    public ResponseEntity<String> testInflux() {
+
+        String token = "Kcq-ml9wvXNMmLp4wugURLkvVdNlt-brxSgFbp3tZB9D-g-ngEctSSHsHYHRrogQ4PuPNmf3PWZdj8_KxpEQVA==";
+        String bucket = "BigTrucks";
+        String org = "HYG";
+        String url = "http://52.58.123.96:8080";
+
+        String riturn = "dqdo ti";
+
+        try{
+            InfluxDBConnectionClass inConn = new InfluxDBConnectionClass();
+            InfluxDBClient influxDBClient = inConn.buildConnection(url, token, bucket, org);
+
+
+            riturn = inConn.queryData(influxDBClient);
+
+
+            influxDBClient.close();
+        }
+        catch(Exception e){
+            return ResponseEntity.ok().body(e.toString());
+        }
+
+        return ResponseEntity.ok().body(riturn);
+
+
+
+
 
     }
 
