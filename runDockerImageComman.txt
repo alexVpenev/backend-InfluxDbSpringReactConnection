@@ -42,3 +42,8 @@ psql -U postgres(<- user)
 		\q (get out of database)
 		
 psql -h localhost(ip address) -p 5432 -U postgres(user)
+
+
+
+
+runnnnnnnnnnnnnning
