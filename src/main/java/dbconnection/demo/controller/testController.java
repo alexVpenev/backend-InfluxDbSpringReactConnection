@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import com.influxdb.client.InfluxDBClient;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -97,6 +99,18 @@ public class testController {
     public ResponseEntity<Truck> getAllTrucks() {
         Truck truck = new Truck(1, "EK220NMADSF", true, "Alex Penev");
         return ResponseEntity.ok().body(truck);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<List<Truck>> getTrucks() {
+        List<Truck> trucks = new ArrayList<Truck>();
+        trucks.add(new Truck(1, "EK220NMADSF", true, "Alex Penev"));
+        trucks.add(new Truck(2, "EK123402MDS", false, "Plamen Prudlivec"));
+        trucks.add(new Truck(3, "POF235224NA", true, "Bat Boiko"));
+        trucks.add(new Truck(4, "ERQ145234fd", true, "Bat Arni"));
+        trucks.add(new Truck(5, "KALE3420645", false, "Vasil Levski"));
+
+        return ResponseEntity.ok().body(trucks);
     }
 
     @GetMapping("/sql")
