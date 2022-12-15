@@ -62,7 +62,7 @@ public class InfluxDBConnectionClass {
         String flux = "from(bucket: \"BigTrucks\")\n" +
                 "  |> range(start: 2022-03-01, stop: 2022-04-20)\n" +
                 "  |> filter(fn: (r) => r[\"_measurement\"] == \"D222E02711T\")\n" +
-                "  |> filter(fn: (r) => r[\"_field\"] == \"ECM_EEC1_Engine_Speed\")\n" +
+                "  |> filter(fn: (r) => r[\"_field\"] == \"ICU_HOURS_ECM_hours\")\n" +
                 "  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\n" +
                 "  |> yield(name: \"mean\")";
 
@@ -73,7 +73,7 @@ public class InfluxDBConnectionClass {
         for (FluxTable fluxTable : tables) {
             List<FluxRecord> records = fluxTable.getRecords();
             for (FluxRecord fluxRecord : records) {
-                return(fluxRecord.getValueByKey("_measurement").toString());
+                return(fluxRecord.getValueByKey("_value").toString());
             }
         }
         return "baba ti";
