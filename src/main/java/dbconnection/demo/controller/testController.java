@@ -3,22 +3,39 @@ package dbconnection.demo.controller;
 import dbconnection.demo.entity.ITruck;
 import dbconnection.demo.entity.Truck;
 import dbconnection.demo.influxdb.InfluxDBConnectionClass;
+import dbconnection.demo.request.LoginRequest;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.influxdb.client.InfluxDBClient;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+import java.security.Key;
 import java.sql.*;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
+@AllArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/")
 public class testController {
@@ -85,11 +102,17 @@ public class testController {
     }
 
 
+//    @PermitAll
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @GetMapping("/")
     public String testHelloDocker() {
         return "FINALEN TEST";
     }
 
+//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAuthority('USER')")
+//    @PreAuthorize("hasAuthority('ROLE_Admin')")
+//    @RolesAllowed({"USER"})
     @GetMapping("/hello")
     public String testHelloWorld() {
         return "General Docker!";
@@ -100,7 +123,7 @@ public class testController {
         Truck truck = new Truck(1, "EK220NMADSF", true, "Alex Penev");
         return ResponseEntity.ok().body(truck);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/test")
     public ResponseEntity<List<Truck>> getTrucks() {
         List<Truck> trucks = new ArrayList<Truck>();
@@ -174,4 +197,54 @@ public class testController {
     public String getMyJson(@RequestBody Map<String, Object> json) {
         return ("" + json);
     }
+
+
+
+//    private UserService userService = new UserService();
+
+    byte[] keyBytes = Decoders.BASE64.decode("E91E158E4C6656F68B1B5D1C316766DE98D2AD6EF3BFB44F78E9CFCDF5");
+    Key key = Keys.hmacShaKeyFor(keyBytes);
+
+//    @PermitAll
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest request){
+        String response = encode(request.username, request.password);
+        return ResponseEntity.ok(response);
+//        return ResponseEntity.ok(request.username + "  az sum prost  " + request.password);
+    }
+
+    private String encode(String username, String password) {
+        Map<String, Object> claimsMap = new HashMap<>();
+//        claimsMap.put("role", accessToken.getRole());
+//        claimsMap.put("user_id", accessToken.getUser_id());
+
+        claimsMap.put("username", username);
+        claimsMap.put("user_id", 2);
+
+
+//        String[] roles = {"Admin"};
+//        List<String> roles = new ArrayList<>();
+//        roles.add("Admin");
+
+
+//        List<String> role = new ArrayList<>();
+//
+//        List<String> roles = role.stream()
+//                .map(userRole-> "USER")
+//                .collect(Collectors.toUnmodifiableList());
+
+        claimsMap.put("role", "USER");
+
+        Instant now = Instant.now();
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(java.util.Date.from(now))
+                .setExpiration(Date.from(now.plus(30, ChronoUnit.MINUTES)))
+                .addClaims(claimsMap)
+                .signWith(key)
+                .compact();
+    }
+
+
+
 }
